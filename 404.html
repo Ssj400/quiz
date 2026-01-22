@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>404 — Quiz</title>
+  <style>
+    body{font-family:Inter,system-ui,Arial;margin:30px;background:#f7f9fb;color:#0b1320}
+    .card{max-width:720px;margin:0 auto;background:#fff;padding:22px;border-radius:8px;box-shadow:0 8px 30px rgba(11,19,32,.06)}
+    a{color:#0b5fff}
+    code{background:#f3f4f6;padding:2px 6px;border-radius:4px}
+  </style>
+</head>
+<body>
+  <main class="card">
+    <h1>Ruta no encontrada (404)</h1>
+    <p>Si estabas intentando acceder a un tema del quiz, intento redirigirte automáticamente.</p>
+    <div id="msg" class="small"></div>
+    <p>Si no te redirige en 2s, <a id="goto" href="/">vuelve al inicio</a> o visita <code>/</code> y elige un topic.</p>
+  </main>
+
+  <script>
+    (function(){
+      // Intenta extraer el primer segmento válido del pathname y redirigir a /?topic=<topic>
+      try{
+        var p = location.pathname.replace(/^\/+|\/+$/g, '');
+        if(p){
+          // tomar solo el primer segmento
+          var seg = p.split('/')[0];
+          // ignorar common files
+          var skip = /(^favicon\.|^assets|^css$|^js$|^img$)/i;
+          if(seg && !skip.test(seg) && !/index\.html$/i.test(seg)){
+            var topic = decodeURIComponent(seg).toLowerCase().replace(/[^a-z0-9_-]/g,'');
+            if(topic){
+              document.getElementById('msg').textContent = 'Redirigiendo al tema: ' + topic + ' — si no, espera o vuelve al inicio.';
+              // redirigir conservando hash/search if needed
+              setTimeout(function(){ location.replace('/?topic=' + encodeURIComponent(topic)); }, 300);
+              document.getElementById('goto').href = '/?topic=' + encodeURIComponent(topic);
+              return;
+            }
+          }
+        }
+      }catch(e){ /* ignore */ }
+      document.getElementById('msg').textContent = 'No pude inferir un tema desde la URL. Pulsa el enlace para volver al inicio.';
+    })();
+  </script>
+</body>
+</html>
