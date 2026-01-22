@@ -32,27 +32,37 @@ const fallback = [
   },
 ];
 
-function loadQuestions() {
-  function getTopic() {
-    try {
-      const url = new URL(location.href);
-      let topic =
-        url.searchParams.get("topic") ||
-        (location.hash ? location.hash.slice(1) : null);
-      if (!topic) {
-        const p = location.pathname.replace(/^\/+|\/+$/g, "");
-        if (p && !/index\.html$/i.test(p)) topic = p.split("/")[0];
-      }
-      if (!topic) return null;
-      topic = String(topic)
-        .toLowerCase()
-        .replace(/[^a-z0-9_-]/g, "");
-      return topic || null;
-    } catch (e) {
-      return null;
-    }
-  }
+function getBasePath() {
+  try {
+    const p = location.pathname || "/";
+    if (p.indexOf("/quiz/quiz") === 0) return "/quiz/quiz";
+    if (p.indexOf("/quiz") === 0) return "/quiz";
+  } catch (e) {}
+  return "";
+}
 
+function getTopic() {
+  try {
+    const url = new URL(location.href);
+    let topic =
+      url.searchParams.get("topic") ||
+      (location.hash ? location.hash.slice(1) : null);
+    if (!topic) {
+      const p = location.pathname.replace(/^\/+|\/+$/g, "");
+      if (p && !/index\.html$/i.test(p)) topic = p.split("/")[0];
+    }
+    if (!topic) return null;
+    topic = String(topic)
+      .toLowerCase()
+      .replace(/[^a-z0-9_-]/g, "");
+    return topic || null;
+  } catch (e) {
+    return null;
+  }
+}
+
+function loadQuestions() {
+  const base = getBasePath();
   const topic = getTopic();
   const files = topic
     ? [`questions-${topic}.json`, "questions.json"]
@@ -64,10 +74,11 @@ function loadQuestions() {
         "No se pudo cargar ningún archivo de preguntas — usando fallback interno.",
       );
       questions = fallback;
-      +startQuiz();
+      startQuiz();
       return;
     }
-    fetch(files[i])
+    const path = base ? `${base}/${files[i]}` : files[i];
+    fetch(path)
       .then((r) => {
         if (!r.ok) throw new Error("no ok");
         return r.json();
@@ -127,7 +138,6 @@ prevBtn.addEventListener("click", () => {
     updateButtons();
   }
 });
-
 nextBtn.addEventListener("click", () => {
   if (current < questions.length - 1) {
     current++;
@@ -137,7 +147,6 @@ nextBtn.addEventListener("click", () => {
 });
 
 submitBtn.addEventListener("click", () => {
-  // calcular puntaje
   let correct = 0;
   const details = questions.map((q, i) => {
     const user = answers[i];
@@ -145,12 +154,10 @@ submitBtn.addEventListener("click", () => {
     if (ok) correct++;
     return { i, ok, user, correctIndex: q.answer };
   });
-
   const percent = Math.round((correct / questions.length) * 100);
   resultEl.innerHTML =
     `<strong>Resultado:</strong> ${correct}/${questions.length} (${percent}%)` +
     renderDetails(details);
-  // deshabilitar controles tras enviar
   prevBtn.disabled = true;
   nextBtn.disabled = true;
   submitBtn.disabled = true;
@@ -177,14 +184,11 @@ function escapeHtml(s) {
   return String(s).replace(
     /[&<>"']/g,
     (c) =>
-      ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#39;",
-      })[c],
+      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[
+        c
+      ],
   );
 }
 
+// Inicializar
 loadQuestions();
