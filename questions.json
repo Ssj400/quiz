@@ -1,0 +1,7 @@
+[
+  {"text":"¿Cuál es la capital de Francia?","choices":["París","Londres","Berlín","Madrid"],"answer":0},
+  {"text":"¿Cuánto es 2 + 2?","choices":["3","4","5","22"],"answer":1},
+  {"text":"¿Qué planeta es conocido como el planeta rojo?","choices":["Venus","Tierra","Marte","Júpiter"],"answer":2},
+  {"text":"¿Cuál de estas es un lenguaje de programación?","choices":["HTML","CSS","Python","HTTP"],"answer":2},
+  {"text":"¿Cuál es el océano más grande?","choices":["Atlántico","Índico","Ártico","Pacífico"],"answer":3}
+]

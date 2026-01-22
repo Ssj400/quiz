@@ -1,0 +1,5 @@
+[
+  {"text":"¿Cuál es la derivada de x^2?","choices":["2x","x","x^2","1"],"answer":0},
+  {"text":"¿Cuál es el valor de π (aprox.)?","choices":["2.14","3.14","4.13","1.73"],"answer":1},
+  {"text":"¿Cuánto es 7 * 8?","choices":["54","56","48","63"],"answer":1}
+]

@@ -1,0 +1,5 @@
+[
+  {"text":"¿Qué es el PIB?","choices":["Producto Interno Bruto","Precio Interno Bruto","Producción Internacional Bruta","Política de Ingresos Brutos"],"answer":0},
+  {"text":"¿Qué tipo de mercado tiene un solo vendedor?","choices":["Competencia perfecta","Monopolio","Oligopolio","Monopolística"],"answer":1},
+  {"text":"¿Qué significa inflación de forma simple?","choices":["Aumento generalizado de precios","Disminución del PIB","Aumento de la población","Mayor ahorro"],"answer":0}
+]
