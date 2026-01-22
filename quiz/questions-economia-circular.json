@@ -1,0 +1,32 @@
+[
+  {
+    "text":"¿Cuál es el objetivo principal de la economía circular?",
+    "choices":[
+      "Incrementar la extracción de recursos naturales",
+      "Reducir costos de producción sin considerar el ambiente",
+      "Reutilizar y reciclar materiales para minimizar residuos",
+      "Aumentar el consumo de productos desechables"
+    ],
+    "answer":2
+  },
+  {
+    "text":"¿Qué etapa del ciclo de vida útil de un producto se enfoca en el reciclaje y la reutilización de materiales?",
+    "choices":[
+      "Procesamiento",
+      "Distribución",
+      "Uso",
+      "Fin de vida"
+    ],
+    "answer":3
+  },
+  {
+    "text":"¿Qué mide la huella de carbono?",
+    "choices":[
+      "La cantidad de residuos sólidos generados",
+      "El impacto ambiental en términos de emisiones de gases de efecto invernadero",
+      "El consumo total de agua de una actividad",
+      "La biodiversidad afectada por una empresa"
+    ],
+    "answer":1
+  }
+]
